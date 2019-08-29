@@ -20,9 +20,9 @@ class List extends React.Component {
   }
 
   addItem(){
-    if(this.state.word.length > 1 && this.state.word.length < 20){
-        this.state.list.push(this.state.word);
-        this.setState({word: ""});
+    if(this.state.word.length >= 1 && this.state.word.length < 200){
+        this.state.list.push([this.state.word, new Date()]);
+        this.setState({word: "", warning: "", class:""});
     }else{
         console.log("not within character count");
         this.setState({class: "warning"});
@@ -38,10 +38,11 @@ class List extends React.Component {
       // render the list with a map() here
 
       console.log("rendering");
-      const wordsList = this.state.list.map((word, index) => {
+      const wordsList = this.state.list.map((x, index) => {
         return (
             <div className="box">
-                <p>{word}</p>
+                <p>{x[0]}</p>
+                <p>{moment(x[1]).format("DD MMM YYYY, h:mm:ss a")}</p>
                 <button onClick={() => {this.deleteItem(index)}}>Delete this</button>
             </div>
             );
