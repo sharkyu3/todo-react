@@ -4,13 +4,21 @@ class List extends React.Component {
 
     this.state = {
       word:"",
-      list : []
+      list : [],
+      class: "",
+      warning: ""
     }
   }
 
   addItem(){
-    this.state.list.push(this.state.word);
-    this.setState({word: ""});
+    if(this.state.word.length > 1 && this.state.word.length < 20){
+        this.state.list.push(this.state.word);
+        this.setState({word: ""});
+    }else{
+        console.log("not within character count");
+        this.setState({class: "warning"});
+        this.setState({warning: "Input must be at least 1 character and not more than 200 characters"})
+    }
   }
 
   changeHandler(){
@@ -27,7 +35,8 @@ class List extends React.Component {
 
       return (
         <div className="list">
-          <input onChange={()=>{this.changeHandler()}} value={this.state.word}/>
+          <input onChange={()=>{this.changeHandler()}} value={this.state.word} className={this.state.class}/>
+          <p>{this.state.warning}</p>
           <button onClick={()=>{this.addItem()}}>add item</button>
           <div>
             <h3>List of words:</h3>
