@@ -10,6 +10,15 @@ class List extends React.Component {
     }
   }
 
+  deleteItem(index){
+    this.state.list.splice(index,1);
+    let newState = {
+        list: this.state.list
+    };
+    this.setState(newState);
+
+  }
+
   addItem(){
     if(this.state.word.length > 1 && this.state.word.length < 20){
         this.state.list.push(this.state.word);
@@ -29,8 +38,13 @@ class List extends React.Component {
       // render the list with a map() here
 
       console.log("rendering");
-      const wordsList = this.state.list.map((word) => {
-        return <p>{word}</p>
+      const wordsList = this.state.list.map((word, index) => {
+        return (
+            <div className="box">
+                <p>{word}</p>
+                <button onClick={() => {this.deleteItem(index)}}>Delete this</button>
+            </div>
+            );
       })
 
       return (
@@ -39,7 +53,6 @@ class List extends React.Component {
           <p>{this.state.warning}</p>
           <button onClick={()=>{this.addItem()}}>add item</button>
           <div>
-            <h3>List of words:</h3>
             {wordsList}
           </div>
         </div>
