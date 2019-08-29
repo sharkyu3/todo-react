@@ -9,28 +9,38 @@ class List extends React.Component {
   }
 
   addItem(){
-    debugger;
+    this.state.list.push(this.state.word);
+    this.setState({word: ""});
   }
 
   changeHandler(){
-    debugger;
+    this.setState({word:event.target.value});
   }
 
   render() {
       // render the list with a map() here
 
       console.log("rendering");
+      const wordsList = this.state.list.map((word) => {
+        return <p>{word}</p>
+      })
+
       return (
         <div className="list">
           <input onChange={()=>{this.changeHandler()}} value={this.state.word}/>
           <button onClick={()=>{this.addItem()}}>add item</button>
+          <div>
+            <h3>List of words:</h3>
+            {wordsList}
+          </div>
         </div>
       );
   }
 }
 
 ReactDOM.render(
-    <List/>,
+    <div>
+        <List/>
+    </div>,
     document.getElementById('root')
 );
-
