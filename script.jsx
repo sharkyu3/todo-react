@@ -1,17 +1,14 @@
 class ToDoItem extends React.Component {
 
     render(){
-        console.log("inside item component: ", this.props.items);
         const wordsList = this.props.items.map((word, index) => {
-        return (<div className="box">
+        return (<div className="box" value={index}>
                 <p>{word[0]}</p>
                 <p>{moment(word[1]).format("DD MMM YYYY, h:mm:ss a")}</p>
-                <button onClick={() => {this.deleteItem(index)}}>Delete this</button>
+                <button value= {index} onClick={() => {this.props.delete(event)}}>Delete this</button>
             </div>);
       });
-
         return(<div>{wordsList}</div>)
-
     }
 
 }
@@ -26,15 +23,16 @@ class List extends React.Component {
       class: "",
       warning: ""
     }
+    this.delete = this.delete.bind(this);
   }
 
-  deleteItem(index){
-    this.state.list.splice(index,1);
+  delete(event){
+    this.state.list.splice(event.target.value,1);
     let newState = {
         list: this.state.list
     };
     this.setState(newState);
-
+    console.log("end of delete function", this.state.list);
   }
 
   addItem(){
@@ -59,7 +57,7 @@ class List extends React.Component {
           <p>{this.state.warning}</p>
           <button onClick={()=>{this.addItem()}}>add item</button>
           <div>
-            <ToDoItem items={this.state.list}/>
+            <ToDoItem items={this.state.list} delete={this.delete}/>
           </div>
         </div>
       );
