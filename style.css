@@ -7,3 +7,10 @@
 	padding:10px;
 	width:40%;
 }
+
+.todo{
+}
+
+.deleted{
+	background-color: pink;
+}
